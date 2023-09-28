@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/foro.css">
+</head>
+<body>
+<div class="global">
+    <h1>Kontua sortu</h1>
+    {% if user.is_authenticated %}
+        <p>{{ user.username }} gisa logeatuta zaude, [<a href="index.html">Joan etxera</a>] edo [<a>Itxi saioa</a>] mesedez.</p>
+    {% else %}
+        <form action="kontuaSortu/" method="post">
+            {% csrf_token %}
+            <label for="username">Erabiltzaile izena:</label>
+            <input type="text" name="username" id="username" required>
+            <label for="password">Pasahitza:</label>
+            <input type="password" name="password" id="password" required>
+            <label for="password2">Pasahitza errepikatu:</label>
+            <input type="password" name="password2" id="password2" required>
+            <input type="submit" value="Sortu">
+        </form>
+    {% endif %}
+</div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/foro.css">
+</head>
+<body>
+    <div class="global">
+        <h1>Gehitu posta</h1>
+        {% if user.is_authenticated %}
+            <form action="addPost/" method="POST">
+            {% csrf_token %}
+                <label for="title">Title</label>
+                <input type="text" name="title" id="title" required>
+                <label for="content">Content</label>
+                <textarea name="content" id="content" cols="30" rows="10" required></textarea>
+                <input type="submit" value="Gehitu">
+            </form>
+        {% else %}
+            <p>Erabiltzailea ez dago logeatuta. <a href="/login">Hasi saioa</a> mesedez.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

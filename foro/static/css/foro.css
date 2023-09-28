@@ -1,0 +1,49 @@
+body {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    background: #e3e8ff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.global {
+    width: 1200px;
+}
+
+.postdiv {
+    width: 100%;
+    margin: 10px 0;
+    background: #bac0e8;
+}
+
+.threadtitle {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.titlediv {
+    width: calc(100% - 20px);
+    margin: 0;
+    background: #7d86e3;
+    padding: 0 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contentdiv {
+    padding: 5px 10px;
+}
+
+.threadid {
+    font-size: 1em;
+    font-weight: bold;
+    margin-right: 5px;
+}

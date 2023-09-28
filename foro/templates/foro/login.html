@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/foro.css">
+</head>
+<body>
+    <div class="global">
+        <h1>Hasi saioa</h1>
+        {% if user.is_authenticated %}
+            <p>{{ user.username }} gisa logeatuta zaude, [<a href="index.html">Joan etxera</a>] edo [<a>Itxi saioa</a>] mesedez.</p>
+        {% else %}
+            <form action="auth/" method="post">
+                {% csrf_token %}
+                <label for="username">Erabiltzailea:</label>
+                <input type="text" name="username" id="username" value="{{ username }}">
+                <br>
+                <label for="password">Pasahitza:</label>
+                <input type="password" name="password" id="password">
+                <br>
+                <input type="submit" value="Sartu">
+            </form>
+            <p>Ez duzu konturik? <a href="/signup/">Erregistratu</a></p>
+        {% endif %}
+    </div>
+</body>
+</html>
