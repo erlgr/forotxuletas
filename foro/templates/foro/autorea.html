@@ -3,14 +3,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>hasiera - forotxuletas</title>
+    <title>{{ author }}'s Threads - Forotxuletas</title>
     <link rel="stylesheet" href="/static/css/foro.css">
 </head>
 <body>
 <div class="global">
     <div class="header">
-        <h1>hasiera</h1>
+        <h1>{{ author }}-(r)en hariak</h1>
         <div class="headeritems">
+            [<a href="/">hasiera</a>]
             {% if user.is_authenticated %}
                 [<a class="loginbutton" href="/logout">saioa itxi</a>]
                 [<a class="postbutton" href="/add">igo</a>]
@@ -23,7 +24,7 @@
         <div class="postdiv">
             <div class="titlediv">
                 <span>
-                    <span class="threadid">#{{ thread.id }}</span> <a class="threadtitle">{{ thread.title }}</a> - <a href="autorea/{{ thread.author }}">{{ thread.author }}</a>
+                    <span class="threadid">#{{ thread.id }}</span> <a class="threadtitle">{{ thread.title }}</a> - {{ thread.author }}
                 </span>
                 <span>
                     {{ thread.creation_date }}

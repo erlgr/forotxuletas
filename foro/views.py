@@ -1,4 +1,4 @@
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
@@ -11,8 +11,13 @@ from foro.models import Thread
 
 
 # Create your views here.
-def thread_list(request):
-    return render(request, 'foro/index.html', {'threads': Thread.objects.all()})
+def thread_list(request, author=None):
+    if author:
+        threads = Thread.objects.filter(author=author)
+        return render(request, 'foro/autorea.html', {'author': author, 'threads': threads})
+    else:
+        threads = Thread.objects.all()
+        return render(request, 'foro/index.html', {'threads': threads})
 
 
 def add_thread(request):
@@ -64,3 +69,23 @@ def auth(request):
         form = AuthenticationForm()
 
     return render(request, 'foro/login.html', {'form': form})
+
+
+@login_required
+def ezabatu(request, thread_id):
+    # If the user is the same as the author of the thread, delete the thread
+    thread = Thread.objects.get(pk=thread_id)
+    if request.user.username == thread.author:
+        thread.delete()
+    return HttpResponseRedirect(reverse('thread_list'))
+
+
+def logout_view(request):
+    # log out the user and redirect to the index page
+    logout(request)
+    return HttpResponseRedirect(reverse('thread_list'))
+
+
+def autorea(request, author):
+    threads = Thread.objects.filter(author=author)
+    return render(request, 'foro/autorea.html', {'author': author, 'threads': threads})

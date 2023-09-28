@@ -9,5 +9,8 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('signup/', views.signup, name='signup'),
     path('signup/kontuaSortu/', views.kontua_sortu, name='kontuaSortu'),
-    path('login/auth/', views.auth, name='auth')
+    path('login/auth/', views.auth, name='auth'),
+    path('logout/', views.logout_view, name='logout'),
+    path('delete/<int:thread_id>/', views.ezabatu, name='ezabatu'),
+    path('autorea/<str:author>/', views.autorea, name='autorea'),
 ]

@@ -8,15 +8,22 @@
 </head>
 <body>
     <div class="global">
-        <h1>Gehitu posta</h1>
+<div class="header">
+        <h1>sortu hari bat</h1>
+        <div class="headeritems">
+            [<a href="/">hasiera</a>]
+        </div>
+    </div>
+
         {% if user.is_authenticated %}
             <form action="addPost/" method="POST">
             {% csrf_token %}
-                <label for="title">Title</label>
+                <label for="title">izenburua</label>
                 <input type="text" name="title" id="title" required>
-                <label for="content">Content</label>
+                <br>
+                <label for="content">edukia</label>
                 <textarea name="content" id="content" cols="30" rows="10" required></textarea>
-                <input type="submit" value="Gehitu">
+                <input type="submit" value="igo">
             </form>
         {% else %}
             <p>Erabiltzailea ez dago logeatuta. <a href="/login">Hasi saioa</a> mesedez.</p>

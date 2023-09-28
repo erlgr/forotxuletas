@@ -10,7 +10,7 @@
     <div class="global">
         <h1>Hasi saioa</h1>
         {% if user.is_authenticated %}
-            <p>{{ user.username }} gisa logeatuta zaude, [<a href="index.html">Joan etxera</a>] edo [<a>Itxi saioa</a>] mesedez.</p>
+            <p>{{ user.username }} gisa logeatuta zaude, [<a href="index.html">Joan etxera</a>] edo [<a href="/logout">Itxi saioa</a>] mesedez.</p>
         {% else %}
             <form action="auth/" method="post">
                 {% csrf_token %}
