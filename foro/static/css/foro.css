@@ -19,7 +19,6 @@ body {
 .postdiv {
     width: 100%;
     margin: 10px 0;
-    background: #bac0e8;
 }
 
 .threadtitle {
@@ -31,15 +30,17 @@ body {
 .titlediv {
     width: calc(100% - 20px);
     margin: 0;
-    background: #7d86e3;
+    background: #a5aaf8;
     padding: 0 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-transform: lowercase;
 }
 
 .contentdiv {
     padding: 5px 10px;
+    background: #ccd6fd;
 }
 
 .threadid {

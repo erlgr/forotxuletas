@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>hasiera - forotxuletas</title>
+    <title>forotxuletas</title>
     <link rel="stylesheet" href="/static/css/foro.css">
 </head>
 <body>
@@ -11,6 +11,14 @@
     <div class="header">
         <h1>hasiera</h1>
         <div class="headeritems">
+           <label for="sort-select"></label>
+           <select id="sort-select" name="sort">
+                <option value="zuzenean" {% if selected_sort == 'zuzenean' %}selected{% endif %}>zuzenean</option>
+                <option value="onena" {% if selected_sort == 'onena' %}selected{% endif %}>onena</option>
+                <option value="azkena" {% if selected_sort == 'azkena' %}selected{% endif %}>azkena</option>
+                <option value="zaharrena" {% if selected_sort == 'zaharrena' %}selected{% endif %}>zaharrena</option>
+                <option value="eztabaida" {% if selected_sort == 'eztabaida' %}selected{% endif %}>eztabaida</option>
+            </select>
             {% if user.is_authenticated %}
                 [<a class="loginbutton" href="/logout">saioa itxi</a>]
                 [<a class="postbutton" href="/add">igo</a>]
@@ -23,14 +31,14 @@
         <div class="postdiv">
             <div class="titlediv">
                 <span>
-                    <span class="threadid">#{{ thread.id }}</span> <a class="threadtitle">{{ thread.title }}</a> - <a href="autorea/{{ thread.author }}">{{ thread.author }}</a>
+                    <span class="threadid">{{ thread.votes }}p</span> <a class="threadtitle">{{ thread.title }}</a> - <a href="autorea/{{ thread.author }}">{{ thread.author }}</a>
                 </span>
                 <span>
                     {{ thread.creation_date }}
                     {% if thread.author == user.username %}
                         [<a href="/delete/{{ thread.id }}">ezabatu</a>]
                     {% endif %}
-                    <a>[erantzun]</a>
+                    [<a href="/haria/{{ thread.id }}">ikusi</a>]
                 </span>
             </div>
             <div class="contentdiv">
@@ -39,5 +47,16 @@
         </div>
     {% endfor %}
 </div>
+
+<script>
+// Add this JavaScript to your template
+document.getElementById('sort-select').addEventListener('change', function () {
+    const selectedSort = this.value;
+    const currentUrl = window.location.href;
+    const url = new URL(currentUrl);
+    url.searchParams.set('sort', selectedSort);
+    window.location.href = url.toString();
+});
+</script>
 </body>
 </html>

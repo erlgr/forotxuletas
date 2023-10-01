@@ -1,3 +1,5 @@
+import datetime
+
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -11,13 +13,31 @@ from foro.models import Thread
 
 
 # Create your views here.
+# Update your view function
 def thread_list(request, author=None):
+    sort = request.GET.get('sort', 'zuzenean')  # Default to 'zuzenean' if no sort parameter is provided
+
+    threads = Thread.objects.all()
+
+    if sort == 'zuzenean':
+        threads = threads.order_by('-bumped')
+    elif sort == 'onena':
+        threads = threads.order_by('-votes')
+    elif sort == 'azkena':
+        threads = threads.order_by('-creation_date')
+    elif sort == 'zaharrena':
+        threads = threads.order_by('creation_date')
+    elif sort == 'eztabaida':
+        threads = threads.order_by('-replies')
+
     if author:
-        threads = Thread.objects.filter(author=author)
-        return render(request, 'foro/autorea.html', {'author': author, 'threads': threads})
+        threads = threads.filter(author=author)
+
+    if author:
+        return render(request, 'foro/autorea.html', {'author': author, 'threads': threads, 'selected_sort': sort})
     else:
-        threads = Thread.objects.all()
-        return render(request, 'foro/index.html', {'threads': threads})
+        return render(request, 'foro/index.html', {'threads': threads, 'selected_sort': sort})
+
 
 
 def add_thread(request):
@@ -89,3 +109,22 @@ def logout_view(request):
 def autorea(request, author):
     threads = Thread.objects.filter(author=author)
     return render(request, 'foro/autorea.html', {'author': author, 'threads': threads})
+
+
+def haria(request, thread_id):
+    thread = Thread.objects.get(pk=thread_id)
+    return render(request, 'foro/thread.html', {'thread': thread})
+
+
+#TODO: hau konpondu
+def add_reply(request):
+    thread_id = request.POST['thread_id']
+    content = request.POST['content']
+    sage = request.POST.get('sage', False)
+    author = request.user.username
+    thread = Thread.objects.get(pk=thread_id)
+    thread.replies += 1
+    if not sage:
+        thread.bumped = datetime.datetime.now()
+    thread.save()
+    return HttpResponseRedirect(reverse('haria', kwargs={'thread_id': thread_id}))

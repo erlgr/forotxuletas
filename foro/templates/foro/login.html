@@ -8,21 +8,26 @@
 </head>
 <body>
     <div class="global">
-        <h1>Hasi saioa</h1>
+        <div class="header">
+            <h1>saioa hasi</h1>
+            <div class="headeritems">
+                [<a href="/">hasiera</a>]
+            </div>
+        </div>
         {% if user.is_authenticated %}
-            <p>{{ user.username }} gisa logeatuta zaude, [<a href="index.html">Joan etxera</a>] edo [<a href="/logout">Itxi saioa</a>] mesedez.</p>
+            <p>{{ user.username }} gisa logeatuta zaude, [<a href="index.html">joan etxera</a>] edo [<a href="/logout">saioa itxi</a>] mesedez.</p>
         {% else %}
             <form action="auth/" method="post">
                 {% csrf_token %}
-                <label for="username">Erabiltzailea:</label>
+                <label for="username">erabiltzailea:</label>
                 <input type="text" name="username" id="username" value="{{ username }}">
                 <br>
-                <label for="password">Pasahitza:</label>
+                <label for="password">pasahitza:</label>
                 <input type="password" name="password" id="password">
                 <br>
                 <input type="submit" value="Sartu">
             </form>
-            <p>Ez duzu konturik? <a href="/signup/">Erregistratu</a></p>
+            <p>ez duzu konturik? <a href="/signup/">sortu kontu bat</a></p>
         {% endif %}
     </div>
 </body>

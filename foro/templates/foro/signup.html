@@ -7,19 +7,24 @@
 </head>
 <body>
 <div class="global">
-    <h1>Kontua sortu</h1>
+    <div class="header">
+        <h1>kontua sortu</h1>
+        <div class="headeritems">
+            [<a href="/">hasiera</a>]
+        </div>
+    </div>
     {% if user.is_authenticated %}
-        <p>{{ user.username }} gisa logeatuta zaude, [<a href="index.html">Joan etxera</a>] edo [<a>Itxi saioa</a>] mesedez.</p>
+        <p>{{ user.username }} gisa logeatuta zaude, [<a href="index.html">joan etxera</a>] edo [<a>saioa itxi</a>] mesedez.</p>
     {% else %}
         <form action="kontuaSortu/" method="post">
             {% csrf_token %}
-            <label for="username">Erabiltzaile izena:</label>
+            <label for="username">erabiltzailea:</label>
             <input type="text" name="username" id="username" required>
-            <label for="password">Pasahitza:</label>
+            <label for="password">pasahitza:</label>
             <input type="password" name="password" id="password" required>
-            <label for="password2">Pasahitza errepikatu:</label>
+            <label for="password2">pasahitza errepikatu:</label>
             <input type="password" name="password2" id="password2" required>
-            <input type="submit" value="Sortu">
+            <input type="submit" value="sortu">
         </form>
     {% endif %}
 </div>
