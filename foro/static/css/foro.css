@@ -48,3 +48,28 @@ body {
     font-weight: bold;
     margin-right: 5px;
 }
+
+.replyheader {
+    width: calc(100% - 20px);
+    background: #dedede;
+    padding: 5px 10px;
+    margin:0;
+    display: flex;
+    justify-content: space-between;
+    text-transform: lowercase;
+}
+
+.replycontent > * {
+    margin: 0;
+}
+.replycontent {
+    width: calc(100% - 20px);
+    background: #ffffff;
+    margin:0;
+    padding: 5px 10px;
+}
+
+.reply {
+    width: 100%;
+    margin: 10px 0;
+}

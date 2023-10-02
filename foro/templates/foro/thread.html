@@ -12,7 +12,6 @@
         <h1>haria</h1>
         <div class="headeritems">
             {% if user.is_authenticated %}
-                [<a class="postbutton" href="/add">erantzun</a>]
             {% else %}
                 [<a class="loginbutton" href="/login">saioa hasi</a>]
             {% endif %}
@@ -21,27 +20,35 @@
     </div>
     <div class="titlediv">
         <span>
-            <span class="threadid">{{ thread.votes }}p</span> <a class="threadtitle">{{ thread.title }}</a> - <a href="autorea/{{ thread.author }}">{{ thread.author }}</a>
+            <span class="threadid">{{ thread.votes }}p</span> <a class="threadtitle">{{ thread.title }}</a> - <a href="/autorea/{{ thread.author }}">{{ thread.author }}</a>
         </span>
     </div>
     <div class="contentdiv">
         <p>{{ thread.content }}</p>
     </div>
-    <form class="replyform" action="addReply/" method="POST">
-        <textarea name="content" placeholder="erantzuna"></textarea>
-        <input type="hidden" name="threadid" value="{{ thread.id }}">
-        <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-        <input type="checkbox" name="sage" value="sage"> sage <span title="sage hautatzen baduzu, posta ez da zuzeneko feed-era igoko.">(?)</span>
-        <input type="submit" value="bidali">
-    </form>
+    {% if user.is_authenticated %}
+        <form class="replyform" method="POST" action="{% url 'add_comment' thread.id %}">
+            {% csrf_token %}
+            <textarea name="content" placeholder="erantzuna"></textarea>
+            <input type="hidden" name="thread_id" value="{{ thread.id }}">
+            <input type="checkbox" name="sage" value="sage"> sage <span title="sage hautatzen baduzu, posta ez da zuzeneko feed-era igoko.">(?)</span>
+            <input type="submit" value="bidali">
+        </form>
+    {% else %}
+        <a href="/login">hasi saioa erantzuteko</a>
+        <br>
+    {% endif %}
     <div class="replies">
-        {% for reply in replies %}
+        {% for comment in comments %}
             <div class="reply">
                 <div class="replyheader">
-                    <span class="replyid">{{ reply.votes }}p</span> <a class="replytitle">{{ reply.title }}</a> - <a href="autorea/{{ reply.author }}">{{ reply.author }}</a>
+                    <span><a href="/autorea/{{ comment.author }}">{{ comment.author }}</a> - {{ comment.creation_date }}</span>
+                    {% if comment.author == user.username %}
+                        <span>[<a href="/deleteComment/{{ comment.id }}">ezabatu</a>]</span>
+                    {% endif %}
                 </div>
                 <div class="replycontent">
-                    <p>{{ reply.content }}</p>
+                    <p>{{ comment.content }}</p>
                 </div>
             </div>
         {% endfor %}

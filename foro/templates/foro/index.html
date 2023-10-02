@@ -20,6 +20,7 @@
                 <option value="eztabaida" {% if selected_sort == 'eztabaida' %}selected{% endif %}>eztabaida</option>
             </select>
             {% if user.is_authenticated %}
+                {{ user.username }} zara
                 [<a class="loginbutton" href="/logout">saioa itxi</a>]
                 [<a class="postbutton" href="/add">igo</a>]
             {% else %}

@@ -6,10 +6,10 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
-from foro.models import Thread
+from foro.models import Thread, Comment
 
 
 # Create your views here.
@@ -113,18 +113,36 @@ def autorea(request, author):
 
 def haria(request, thread_id):
     thread = Thread.objects.get(pk=thread_id)
-    return render(request, 'foro/thread.html', {'thread': thread})
+    comments = Comment.objects.filter(thread=thread)
+    return render(request, 'foro/thread.html', {'thread': thread, 'comments': comments})
 
 
-#TODO: hau konpondu
-def add_reply(request):
-    thread_id = request.POST['thread_id']
-    content = request.POST['content']
-    sage = request.POST.get('sage', False)
-    author = request.user.username
-    thread = Thread.objects.get(pk=thread_id)
-    thread.replies += 1
-    if not sage:
-        thread.bumped = datetime.datetime.now()
-    thread.save()
-    return HttpResponseRedirect(reverse('haria', kwargs={'thread_id': thread_id}))
+def add_comment(request, thread_id):
+    if request.method == 'POST':
+        thread = Thread.objects.get(pk=thread_id)  # Retrieve the thread or post
+        content = request.POST.get('content', '')
+        sage = request.POST.get('sage', False)
+        author = request.user.username  # Assign the username directly
+
+        if content:
+            comment = Comment.objects.create(
+                thread=thread,
+                content=content,
+                author=author,
+            )
+            comment.save()
+
+            if not sage:
+                thread.bumped = datetime.datetime.now()
+                thread.save()
+
+    return HttpResponseRedirect(reverse('thread_list'))
+
+
+def delete_comment(request, comment_id):
+    # If the user is the same as the author of the comment, delete the comment
+    comment = Comment.objects.get(pk=comment_id)
+    if request.user.username == comment.author:
+        comment.delete()
+    return HttpResponseRedirect(reverse('thread_list'))
+

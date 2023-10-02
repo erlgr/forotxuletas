@@ -14,5 +14,6 @@ urlpatterns = [
     path('delete/<int:thread_id>/', views.ezabatu, name='ezabatu'),
     path('autorea/<str:author>/', views.autorea, name='autorea'),
     path('haria/<int:thread_id>/', views.haria, name='haria'),
-    path('haria/<int:thread_id>/addReply/', views.add_reply, name='add_reply'),
+    path('haria/<int:thread_id>/addComment/', views.add_comment, name='add_comment'),
+    path('deleteComment/<int:comment_id>/', views.delete_comment, name='delete_comment'),
 ]
